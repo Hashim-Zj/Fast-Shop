@@ -1,0 +1,29 @@
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      <a href="/admin/add-products" class="btn btn-primary my-auto">Add</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each prodects}}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{this.title}}</td>
+          <td>{{this.catogary}}</td>
+          <td>{{this.price}}</td>
+          <td><img src="/images/products/{{this._id}}.jpeg"  style="width: auto;height: 100%;" alt=""></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

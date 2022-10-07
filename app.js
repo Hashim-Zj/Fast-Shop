@@ -4,8 +4,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
+const { engine } = require('express-handlebars');
+const fileUpload = require('express-fileupload');
+const db = require('./config/connection');
+
 const usersRouter = require('./routes/users');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -13,9 +17,9 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine(
-  'hbs',
-  hbs({
-    extname: 'hbs',
+  '.hbs',
+  engine({
+    extname: '.hbs',
     defaultLayout: 'layout',
     layoutsDir: __dirname + '/views/layouts/',
     partialsDir: __dirname + '/views/partials/',
@@ -27,9 +31,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  fileUpload(
+  //   {
+  //   // limits: { fileSize: 50 * 1024 * 1024 },
+  // }
+  )
+);
+db.connect((err) => {
+  if (err) console.log('Database connection Erorr'+err);
+  else console.log('Database Connected to FastShop');
+});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
