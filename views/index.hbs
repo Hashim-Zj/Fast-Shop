@@ -1,0 +1,50 @@
+<section class=" h-100">
+  <div class="container-fluid p-0 m-0">
+    {{!-- HEADER SECTION --}}
+    <div class="d-flex justify-content-between bg-body shadow-sm position-fixed top-0 w-100 header ">
+      <div><img src="/images/mainImg/fast_shop-logo.jpeg" class="d-inline ms-2 imgFastShop" alt="">
+      </div>
+      <div id="indexhead" class="mx-auto my-auto">FastShop</div>
+      <a href="/signin" class="btn btn-outline-primary p-1 my-auto me-3 signinbtn">SignIn</a>
+    </div>
+
+    {{!-- MAIN SECTION --}}
+    {{!-- PART1 --}}
+    <main class="pb-3 ">
+      <div class=" image-main">
+        <img src="/images/mainImg/mainimage.jpeg" class="fitimage my-4 " alt="">
+      </div>
+      <p class=" text-success text-center textfree"> FASTSHOP Providing <span class="text-danger">FREE</span> Delivery &
+        <span class="text-danger">FRESH</span>Delivery 🧭</p>
+
+      <hr class="border border-dark border-2 opacity-25 w-100">
+      {{!-- PART2 --}} 
+      <div class="row mx-3 d-flex justify-content-between ">
+        {{#each indexData.data}}
+       
+          <div class="card col-md-6 col-lg-4 col-sm-12 border-0">
+            <img src="/images/mainImg/{{this.image}}" class="card-img-top card_image" alt="...">
+            <div class="card-body">
+              <p class="card-text text-center fw-bold fs-5">{{this.title}}</h3>
+              <p class="text-success fw-semibold text-center">{{this.offer}}</p>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </main>
+    {{!-- FOOTER SECTION--}}
+    <div class="card p-0 m-0 text-center">
+      <div class="card-body bg-dark text-white p-0 m-0">
+        <hr class="border border-light border-2 opacity-25 w-100 pt-0">
+
+        <h5 class="card-title">Shop now with best offer</h5>
+        <p class="card-text">shop by best movies ,Books, grocery with free Delivery🚛✨✨✨</p>
+        <p>Signin Wihe an Administrator <span class="material-icons-outlined">
+          arrow_downward
+        </span></p>
+        <a href="/adminSignIn" class="btn btn-outline-light mb-4">SignIn With Administrator</a>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,42 @@
+body {
+  padding: 0%;
+  margin: 0%;
+}
+
+.backarow {
+  top: 10px;
+  left: 10px;
+}
+
+.imageLogin {
+  width: 100%;
+  height: auto;
+}
+.forminput {
+  border: 1px solid #111;
+  outline: none;
+  border-radius: 4px;
+}
+.forminput:focus {
+  outline: none;
+  border: 2px solid green;
+  box-shadow: none;
+}
+.forminput:focus::placeholder {
+  color: transparent;
+}
+
+.forminput::placeholder {
+  font: 16px/3 sans-serif;
+  color: black;
+  opacity: 75%;
+}
+p > a {
+  text-decoration: none;
+}
+
+@media (min-width: 62rem) {
+  .maxpading{
+    margin-top: 10rem;
+  }
+}

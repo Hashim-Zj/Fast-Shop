@@ -7,7 +7,9 @@ const logger = require('morgan');
 const { engine } = require('express-handlebars');
 const fileUpload = require('express-fileupload');
 const db = require('./config/connection');
+const session = require('express-session');
 
+const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
 
@@ -31,19 +33,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(
-  fileUpload(
+  fileUpload()
   //   {
   //   // limits: { fileSize: 50 * 1024 * 1024 },
   // }
-  )
 );
+app.use(session({ secret: 'something', cookie: { maxAge: 1000 * 5 * 1 } }));
 db.connect((err) => {
-  if (err) console.log('Database connection Erorr'+err);
-  else console.log('Database Connected to FastShop');
+  if (err) console.log('Database connection Erorr' + err);
+  else console.log('Database Connected To FastShop🥢');
 });
 
-app.use('/', usersRouter);
+app.use('/',indexRouter);
+app.use('/user', usersRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler

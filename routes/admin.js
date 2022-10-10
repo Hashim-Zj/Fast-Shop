@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const productContrller = require('./../controller/prodect-controller');
-
+const productContrller = require('./../controller/prodectController');
+const admin = {
+  admin: true,
+  style: 'styles',
+};
 /* GET users listing. */
 router.get('/', (req, res, next) => {
   productContrller.getAllProducts().then((prodects) => {
-    console.log(prodects);
-    res.render('admin/products', { prodects, admin: true });
+    admin.prodects = prodects;
+    res.render('admin/products', { admin });
   });
 });
 
@@ -15,19 +18,34 @@ router.get('/add-products', (req, res) => {
 });
 
 router.post('/addProduct', (req, res) => {
-  console.log(req.body);
-  console.log(req.body.file_img);
-  productContrller.addProduct(req.body, (objId) => {
-    console.log(objId);
-    const image = req.files.file_img;
-    image.mv('public/images/products/' + objId + '.jpeg', (err, done) => {
-      if (!err) {
-        res.render('admin/add-products', { admin: true });
-      } else {
-        console.log(err);
-      }
-    });
+  const image = req.files.file_img;
+  productContrller.addProduct(req.body, image, (err) => {
+    if (!err) res.render('admin/add-products', { admin: true });
+    else console.log(err);
   });
+});
+
+router.get('/deleatProduct/:id', (req, res) => {
+  const movieId = req.params.id;
+  // const image = req.files.file_img;
+  productContrller.deleteMovie(movieId).then((response) => {
+    res.redirect('/admin/');
+  });
+});
+
+router.get('/editProduct/:id', async (req, res) => {
+  const itom = await productContrller.getOneItom(req.params.id);
+  // console.log(itom);
+  res.render('admin/edit-product', { itom });
+});
+
+router.post('/editProduct/:id', (req, res) => {
+  const movieId = req.params.id;
+  console.log(movieId);
+  productContrller.updateItom(movieId, req.body);
+  res.redirect('/admin/');
+  const image = req.files.file_img;
+  image.mv('public/images/products/' + movieId + '.jpeg');
 });
 
 module.exports = router;

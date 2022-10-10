@@ -7,21 +7,28 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-          <th scope="col">Handle</th>
+          <th scope="col">Title</th>
+          <th scope="col">Catogary</th>
+          <th scope="col">Price</th>
+          <th scope="col">Image</th>
         </tr>
       </thead>
       <tbody>
-        {{#each prodects}}
-        <tr>
-          <th scope="row">1</th>
-          <td>{{this.title}}</td>
-          <td>{{this.catogary}}</td>
-          <td>{{this.price}}</td>
-          <td><img src="/images/products/{{this._id}}.jpeg"  style="width: auto;height: 100%;" alt=""></td>
-        </tr>
+        {{#each admin.prodects}}
+          <tr>
+            <th scope="row">1</th>
+            <td>{{this.title}}</td>
+            <td>{{this.catogary}}</td>
+            <td>{{this.price}}</td>
+            <td><img src="/images/products/{{this._id}}.jpeg" style="width: 60px;height: 100px;" alt=""></td>
+            <td>
+              <a href="/admin/editProduct/{{this._id}}"><span
+                  class="material-icons-outlined">drive_file_rename_outline</span></a>
+              <a href="/admin/deleatProduct/{{this._id}}"
+                onclick="return confirm('Are you sure ?\nYou want to delete {{this.title}}')"><span
+                  class="material-icons-outlined">delete_forever</span></a>
+            </td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

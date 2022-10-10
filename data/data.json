@@ -1,0 +1,33 @@
+[
+  {
+    "image": "fruit&vegitables.jpeg",
+    "title": "Fresh Fruit🍇 & vegetables🥬",
+    "offer":"50% OFF"
+  },
+  {
+    "image": "grosareyes.webp",
+    "title": "Fresh Grocery 🍿🧁🍕",
+    "offer":"30% OFF"
+  },
+  {
+    "image": "elactronics.webp",
+    "title": "Best Electronics & Accessories💲",
+    "offer":"20% OFF"
+  },
+  {
+    "image": "books.jpeg",
+    "title": "Bestseller Books & Comics✨",
+    "offer":"30% OFF"
+  },
+  {
+    "image": "movies.webp",
+    "title": "Trending Movies & TV Shows🎬",
+    "offer":"5% OFF"
+  }
+  ,
+  {
+    "image": "butyeproducts.webp",
+    "title": "Beauty Products🎀",
+    "offer": "40% OFF"
+  }
+]

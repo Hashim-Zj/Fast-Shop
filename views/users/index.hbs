@@ -1,0 +1,19 @@
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      {{#each prodects}}
+        <div class="card" style="width: 18rem;">
+          <img src="/images/products/{{this._id}}.jpeg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <p class="card-text">{{this.catogery}}</p>
+            <p class="card-text">{{this.discription}}
+              <p class="card-text">{{this.price}}</p>
+            </p>
+            <a href="/users/myCart" class="btn btn-primary">Buy or Rent</a>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

@@ -3,5 +3,6 @@ module.exports = {
   PASSWORD: '',
   DATABASE_NAME: 'FastShop',
   COLLECTION_PRODUCT: 'products',
-  COLLECTION_USER: 'users',
+  COLLECTION_CLIENTS: 'clients',
+  
 };

@@ -1,8 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Silkscreen:wght@400;700&display=swap');
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  --title-font: 'Silkscreen', cursive;
+  --font-family: 'Poppins', sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+.header {
+  z-index: 10;
+}
+.imgFastShop {
+  height: 6rem;
+  width: auto;
 }
 
-a {
-  color: #00B7FF;
+#indexhead {
+  font-family: var(--title-font);
+  color: hsla(253, 93%, 16%, 0.719);
+  font-size: 3rem;
+}
+
+.signinbtn {
+  font-family: var(--font-family);
+  font-size: large;
+  height: fit-content;
+  font-weight: 500;
+}
+
+main {
+  margin-top: 6rem;
+  background-color: rgb(221, 233, 218);
+}
+.image-main {
+  margin: auto;
+  width: 70vw;
+  height: auto;
+}
+.fitimage {
+  width: 100%;
+  height: auto;
+}
+.textfree {
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.card_image {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
 }
