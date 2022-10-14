@@ -9,11 +9,16 @@ const user = {
 /* GET home page. */
 router.get('/', (req, res, next) => {
   productContrller.getAllProducts().then((prodects) => {
-    user.user = req.session.client;
-    user.prodects = prodects;
-    res.render('users/index', { user });
+    if (req.session.logedIn) {
+      const datas = {
+        user: req.session.Body,
+        products: prodects,
+      }
+      res.render('users/index', { user, datas });
+    } else {
+      res.redirect('/signin');
+    }
   });
-  res.render('user/index');
 });
 
 router.get('/signout', (req, res) => {

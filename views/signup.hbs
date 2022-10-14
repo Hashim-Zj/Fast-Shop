@@ -11,7 +11,7 @@
         <img src="/images/mainImg/register.webp" class="img-fluid imageLogin" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 p-3">
-        <form action="/signup" method="post" class="">
+        <form action="/signUp" method="post" class="">
 
           <div class="d-flex flex-row align-items-center justify-content-center ">
             <p class="fw-bold text-secondary fs-2 mt-3">✒ Register in FastShop {{indexData.log.message}}</p>
@@ -20,13 +20,13 @@
           <div class="form-outline mb-4 ">
             <label class="form-label ms-2" for="registerName">Full Name</label>
             <input type="text" name="Name" class="form-control form-control-lg forminput"
-              value="{{logError.curentData.Name}}" placeholder="Enter your FullName" />
+              value="{{statusData.body.Name}}" placeholder="Enter your FullName" />
 
-            {{#if logError.logError}}
+            {{#if statusData.errMsg.name}}
              <label>
                 <SPan class="fs-3"><span class="material-icons-outlined text-danger">
                     error_outline
-                  </span>{{logError.logError.Name}}</SPan>
+                  </span>{{statusData.errMsg.name}}</SPan>
               </label>
               {{/if}}
           </div>
@@ -35,12 +35,12 @@
           <div class="form mb-4">
             <label class="form-label ms-2" for="Email">Email address</label>
             <input type="text" name="Email" class="form-control form-control-lg forminput"
-              value="{{logError.curentData.Email}}" placeholder="Enter your email address" />
-              {{#if logError.logError}}
-                <label {{logError.view}}>
+              value="{{statusData.body.Email}}" placeholder="Enter your email address" />
+              {{#if statusData.errMsg.email}}
+                <label>
                   <SPan class="fs-3"><span class="material-icons-outlined text-danger">
                       error_outline
-                    </span>{{logError.logError.Email}}</SPan>
+                    </span>{{statusData.errMsg.email}}</SPan>
                 </label>
               {{/if}}
           </div>
@@ -49,19 +49,26 @@
           <div class="form-outline mb-4">
             <label class="form-label ms-2" for="registerPhone">PhoneNo</label>
             <input type="text" name="Phone" class="form-control form-control-lg forminput"
-              value="{{logError.curentData.Phone}}" placeholder="Enter your Valid PhoneNo" />
+              value="{{statusData.body.Phone}}" placeholder="Enter your Valid PhoneNo" />
+              {{#if statusData.errMsg.phone}}
+                <label>
+                  <SPan class="fs-3"><span class="material-icons-outlined text-danger">
+                      error_outline
+                    </span>{{statusData.errMsg.phone}}</SPan>
+                </label>
+              {{/if}}
           </div>
           {{#if indexData.log.admin}}
             {{!-- security input --}}
             <div class="form mb-3">
               <label class="form-label ms-2" for="Password">Security key</label>
               <input type="password" name="key" class="form-control form-control-lg forminput"
-                value="{{logError.curentData.key}}" placeholder="Enter the Security key" />
-                {{#if logError.logError}}
+                value="{{statusData.body.key}}" placeholder="Enter the Security key" />
+                {{#if statusData.errMsg.key}}
                   <label>
                     <SPan class="fs-3"><span class="material-icons-outlined text-danger">
                         error_outline
-                      </span>{{logError.logError.key}}</SPan>
+                      </span>{{statusData.errMsg.key}}</SPan>
                   </label>
                 {{/if}}
             </div>
@@ -70,14 +77,19 @@
           <div class="form mb-3">
             <label class="form-label ms-2" for="Password">Password</label>
             <input type="password" name="Password" class="form-control form-control-lg forminput"
-              placeholder="Enter password" />
-              {{#if logError.logError}}
+              placeholder="Enter password" value='{{statusData.body.Password}}'/>
+              {{#if statusData.errMsg.pass}}
                 <label>
                   <SPan class="fs-3"><span class="material-icons-outlined text-danger">
                       error_outline
-                    </span>{{logError.logError.Password}}</SPan>
+                    </span>{{statusData.errMsg.pass}}</SPan>
                 </label>
               {{/if}}
+              {{!-- {{#if statusData.errMsg}} --}}
+                {{!-- <label>
+                  <i class="fa-regular fa-circle-exclamation"></i><span>{{statusData.errMsg.sPswErrMsg}}</SPan>
+                  </label>
+              {{/if}} --}}
           </div>
           <input type="text" name="logType" value="{{indexData.log.logType}}" hidden>
 
@@ -85,7 +97,11 @@
             <button type="submit" class="btn btn-outline-primary px-4">Sign Up</button>
             <span>
               <p class="fw-bold">Already have an account?
-                <a href="/signin" class="text-secondry  ms-1"><span>Sign in &#8594;</span></a>
+                {{#if indexData.log.admin}}
+                <a href="/adminSignIn" class="text-secondry  ms-1"><span>Sign in &#8594;</span></a>
+                {{else}}
+                <a href="/signIn" class="text-secondry  ms-1"><span>Sign in &#8594;</span></a>
+                {{/if}}
               </p>
             </span>
 

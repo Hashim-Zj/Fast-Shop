@@ -1,1 +1,5 @@
-console.log('Hi the page loging 😎...');
+newFunction();
+
+function newFunction() {
+  console.log('Hi the page loging 😎...');
+}

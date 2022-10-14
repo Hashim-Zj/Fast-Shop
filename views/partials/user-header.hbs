@@ -37,8 +37,8 @@
       <!-- Split dropend button -->
       <div class="btn-group">
         <button type="button" class="btn btn-secondary">
-          {{#if user}}
-            {{user.user.Name}}
+          {{#if statusData}}
+            {{statusData.body.Name}}
           {{else}}
             NO ACCOUNTS
           {{/if}}
@@ -47,7 +47,7 @@
           aria-expanded="false"></button>
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
-            {{#if user}}
+            {{#if statusData}}
               <a class="dropdown-item" href="/signout">logout</a>
             {{else}}
               <a class="dropdown-item" href="/users/signin">login</a>
