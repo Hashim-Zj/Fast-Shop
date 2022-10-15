@@ -24,12 +24,12 @@
             <label class='form-label ms-2' for='Email'>Email address</label>
             <input type='text' name='Email' class='form-control form-control-lg forminput'
               placeholder='Enter your registerd email address' value='{{statusData.body.Email}}' />
-            {{#if statusData.errMsg.email}}
-              <label>
-                <SPan class='fs-3'><span class='material-icons-outlined text-danger'>
-                    error_outline
-                  </span>{{statusData.errMsg.email}}</SPan>
-              </label>
+
+              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
+                requiered</span>
+            {{#if statusData.errMsg.logEmail}}
+              <span class='text-danger'><i class='fa-regular fa-circle-exclamation'>
+              </i>{{statusData.errMsg.logEmail}}</span>
             {{/if}}
           </div>
 
@@ -38,25 +38,23 @@
             <label class='form-label ms-2' for='Password'>Password</label>
             <input type='password' name='Password' class='form-control form-control-lg forminput'
               placeholder='Enter password' value='{{statusData.body.Password}}' />
-            {{#if statusData.errMsg.pass}}
-              <label>
-                <SPan class='fs-3'><span class='material-icons-outlined text-danger'>
-                    error_outline
-                  </span>{{statusData.errMsg.pass}}</SPan>
-              </label>
-            {{/if}}
+              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
+                requiered</span>
+              {{#if statusData.errMsg.logPass}}
+                <span class='text-danger'><i class='fa-regular fa-circle-exclamation'>
+                  </i>{{statusData.errMsg.logPass}}</span>
+              {{/if}}
           </div>
           {{! TYPE INPUT }}
           <input type='text' name='logType' value='{{indexData.log.logType}}' hidden />
+          
           <div class='text-center text-lg-start mt-4'>
             <button type='submit' class='btn btn-outline-success px-4'>Login</button>
 
             <span>
               <p class='fw-bold'>Don't have an account?
-                <a href='/signUp' class='text-secondry ms-1'><span>Register
-                    &#8594;</span></a>
-              </p>
-            </span>
+                <a href='/signUp' class='text-secondry ms-1'>
+                <span>Register &#8594;</span></a></p></span>
           </div>
         </form>
       </div>

@@ -3,16 +3,17 @@ const router = express.Router();
 const logsController = require('./../controller/logsController');
 
 const fs = require('fs');
-const data = JSON.parse(fs.readFileSync(`${__dirname}/../data/data.json`));
 const indexData = {
-  type: 'main',
-  data: data,
+  js: 'script',
 };
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+  const data = JSON.parse(fs.readFileSync(`${__dirname}/../data/data.json`));
   indexData.style = 'style';
-  res.render('index', { indexData });
+  console.log('indexData from indexget :--+++++');
+  console.log(indexData);
+  res.render('index', { indexData, data });
 });
 
 /* GET user SignIn page. */
@@ -24,12 +25,12 @@ router.get('/signIn', (req, res) => {
     logType: 'user',
     message: '',
   };
-  const logdin = req.session.logedIn
+  console.log('indexData from signIn :--+++++');
+  console.log(indexData);
+  const logdin = req.session.logedIn;
   if (logdin) {
-    console.log('_________{users}_________');
     res.redirect('/users/');
   } else {
-    console.log('_________[signin]_________');
     const statusData = {
       errMsg: req.session.errMsg,
       body: req.session.Body,
@@ -47,7 +48,9 @@ router.get('/adminSignIn', (req, res) => {
     logType: 'admin',
     message: 'As Administrator',
   };
-  console.log('admin login');
+  // console.log('indexData from AdminsignIn :--+++++');
+  // console.log(indexData);
+  // console.log('admin login');
   if (req.session.logedIn) {
     console.log('session login');
     res.redirect('/users/');
@@ -60,23 +63,26 @@ router.get('/adminSignIn', (req, res) => {
   }
 });
 
-router.post('/signin', (req, res) => {
-  logsController.Login(req.body).then((logStatus) => {
-    if (logStatus.status) {
-      req.session.logedIn = true;
-      req.session.Body = logStatus.Body;
-      req.body.logType === 'user'
-        ? res.redirect('/users/')
-        : res.redirect('/admin/');
-    } else {
-      req.session.errMsg = logStatus.errMsg;
-      req.session.Body = req.body;
-      req.body.logType === 'user'
-        ? res.redirect('/signIn')
-        : res.redirect('/adminSignIn');
-    }
-  });
+router.post('/signin', async (req, res) => {
+  // console.log('indexData from postsignin :--+++++');
+  // console.log(indexData);
+  const logStatus = await logsController.Login(req.body);
+  if (logStatus.status) {
+    console.log('login  sucesssfull');
+    req.session.logedIn = true;
+    req.session.Body = logStatus.Body;
+    req.body.logType === 'user'
+      ? res.redirect('/users/')
+      : res.redirect('/admin/');
+  } else {
+    req.session.errMsg = logStatus.errMsg;
+    req.session.Body = req.body;
+    req.body.logType === 'user'
+      ? res.redirect('/signIn')
+      : res.redirect('/adminSignIn');
+  }
 });
+// });
 
 /* GET SignUp page. */
 router.get('/signUp', (req, res) => {
@@ -85,26 +91,31 @@ router.get('/signUp', (req, res) => {
     errMsg: req.session.errMsg,
     body: req.session.Body,
   };
+  // console.log('indexData from signUp :--+++++');
+  // console.log(indexData);
   res.render('signup', { indexData, statusData });
 });
 
 router.post('/signUp', (req, res) => {
-  logsController.newLogin(req.body).then((logStatus) => {
-    if (logStatus.status) {
-      if (req.body.logType === 'user') {
-        req.session.logedIn = true;
-        req.session.Body = logStatus.Body;
-        res.redirect('/users/');
-      } else res.redirect('/adminSignIn');
+  const logStatus = logsController.newLogin(req.body);
+  if (logStatus.status) {
+    if (req.body.logType === 'user') {
+      req.session.logedIn = true;
+      req.session.Body = logStatus.Body;
+      res.redirect('/users/');
     } else {
-      console.log('____________}{}{}{___________');
-      console.log(logStatus.errMsg);
-      console.log(logStatus.errMsg.sPswErrMsg);
-      req.session.errMsg = logStatus.errMsg;
-      req.session.Body = req.body;
-      res.redirect('/signUp');
+      res.redirect('/adminSignIn');
     }
-  });
+  } else {
+    req.session.errMsg = logStatus.errMsg;
+    req.session.Body = req.body;
+    res.redirect('/signUp');
+  }
+});
+
+router.get('/signout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/signin');
 });
 
 module.exports = router;

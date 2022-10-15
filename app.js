@@ -34,20 +34,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-  fileUpload()
-  //   {
-  //   // limits: { fileSize: 50 * 1024 * 1024 },
-  // }
-);
-app.use(session({ secret: 'something', cookie: { maxAge: 1000 * 5 * 1 } }));
+app.use(fileUpload());
+app.use(session({ secret: 'something', cookie: { maxAge: 1000 * 60 * 1 } }));
 db.connect((err) => {
   if (err) console.log('Database connection Erorr' + err);
   else console.log('Database Connected To FastShop🥢');
 });
 
 app.use('/',indexRouter);
-app.use('/user', usersRouter);
+app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler

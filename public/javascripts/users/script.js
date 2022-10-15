@@ -1,0 +1,1 @@
+console.log('hi is cript js in js');

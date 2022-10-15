@@ -3,7 +3,7 @@ const router = express.Router();
 const productContrller = require('./../controller/prodectController');
 const admin = {
   admin: true,
-  style: 'styles',
+  style: 'style',
 };
 /* GET users listing. */
 router.get('/', (req, res, next) => {

@@ -1,213 +1,154 @@
 const db = require('./../config/connection');
 const Data = require('./../config/cnstans');
 const bcrypt = require('bcrypt');
-const validator = require('validator');
 
-const logStatus = {
-  errMsg: {
-    name: false,
-    email: false,
-    phone: false,
-    key: false,
-    pass: false,
-  },
-};
+const logStatus = { errMsg: {} };
 
-async function isExist(email, type) {
-  const dbEmail = await db
+//TODO SIGNUP
+async function isEmailExist(email, type) {
+  const sudoEmail = await db
     .get()
     .collection(Data.COLLECTION_CLIENTS)
     .findOne(
       { Email: email, logType: type },
       { projection: { _id: 0, Email: 1 } }
-    );
-  console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{');
-  console.log(dbEmail);
-  const com = dbEmail.Email
-  if (email === com) {
+  );
+  if (sudoEmail) {
     return true;
   } else return false;
 }
 
-function PassCompare(pass, dbPass) {
-  bcrypt.compare(pass, dbPass).then((result) => {
-    return result;
-  });
+async function getAdministrator() {
+  const Adminstrator = await db
+    .get()
+    .collection(Data.COLLECTION_CLIENTS)
+    .findOne(
+      { name: 'hashim', Type: 'administrator' },
+      { projection: { _id: 0, Password: 1 } }
+  ); 
+  return Adminstrator;
 }
 
-function nameValidater(name) {
-  if (validator.isEmpty(name)) {
-    logStatus.errMsg.name = 'Enter your name';
+async function sudoCmp(Password) {
+  const superAdmin = await getAdministrator();
+  if (superAdmin) {
+    if (await bcrypt.compare(Password, superAdmin.Password)) {
+      logStatus.status = true;
+      return true;
+    }
+    logStatus.errMsg.pass = "The security key isn't correct";
     return false;
-  } else if (!validator.isAlpha(name)) {
-    logStatus.errMsg.name = 'Only [a-zA-Z] letters are allowed';
-    return false;
-  } else {
-    return true;
   }
+  logStatus.errMsg.pass = 'Sorry admin registration not suport! try next time';
+  return false;
 }
 
-function emailValidater(email, type) {
-  if (validator.isEmpty(email, { ignore_whitespace: true })) {
-    logStatus.errMsg.email = 'Enter your email';
-    return false;
-  } else if (!validator.isEmail(email)) {
-    logStatus.errMsg.email = 'Please correct your email format';
-    return false;
-  } else if (isExist(email, type)) {
+exports.newLogin = async function (logData) {
+  // logStatus =null;
+  logStatus.status = false;
+  logStatus.errMsg = {
+    pass: false,
+    email: false,
+  };
+  if (await isEmailExist(logData.Email, logData.logType)) {
     logStatus.errMsg.email = 'This Email is alrady taken';
-    return false;
-  } else {
-    return true;
+    console.log('ERROR WMAIL');
+    console.log(logStatus);
+    return logStatus;
   }
-}
-
-function phoneValidater(phone) {
-  const length = phone.length;
-  if (!validator.isNumeric(phone) && !(validator.isEmpty(phone))) {
-    logStatus.errMsg.phone = 'Only numbers allowed';
-    return false;
-  } else if ((length !== 10) && !(validator.isEmpty(phone))) {
-    logStatus.errMsg.phone = 'The phone number should have 10 digit';
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function isAdmin(admin) {
-  if (admin === 'admin') return true;
-  else return false;
-}
-
-async function keyValidater(key) {
-  if (validator.isEmpty(key)) {
-    logStatus.errMsg.key = 'Enter security key';
-    return false;
-  } else {
-    const Adminstrator = await db
-      .get()
-      .collection(Data.COLLECTION_CLIENTS)
-      .findOne(
-        { name: 'hashim', Type: 'administrator', email: '8606070595' },
-        { projection: { _id: 0, Password: 1 } }
-      );
-    if (Adminstrator) {
-      if (PassCompare(key, Adminstrator.Password)) return true;
-      else {
-        logStatus.errMsg.key = "The security key isn't correct";
-        return false;
-      }
-    } else {
-      logStatus.errMsg.key =
-        'Sorry admin registration not suport! try next time';
-      return false;
+  if (logData.logType === 'admin') {
+    if (!(await sudoCmp(logData.key))) {
+      console.log('WARN security');
+      console.log(logStatus);
+      return logStatus;
     }
+    delete logData.key;
   }
-}
-
-function passwordValidater(pass) {
-  const length = pass.length;
-  if (validator.isEmpty(pass)) {
-    logStatus.errMsg.pass = 'Enter a password';
-    return false;
-  } else if (!(length >= 8 && length <= 12)) {
-    logStatus.errMsg.pass = 'length of password must include 8-12';
-    return false;
-  }
-  else return true;
-}
-
-exports.newLogin = (logData) => {
-  return new Promise(async (resolve, reject) => {
-    nameValidater(logData.Name);
-    emailValidater(logData.Email, logData.logType);
-    phoneValidater(logData.Phone);
-    if (isAdmin(logData.logType)) {
-      keyValidater(logData.key); 
-    }
-    passwordValidater(logData.Password);
-    if (isAdmin(logData.logType)) {
-      finalStatus =
-        nameValidater(logData.Name) &&
-        emailValidater(logData.Email, logData.logType) &&
-        phoneValidater(logData.Phone) &&
-        keyValidater(logData.key) &&
-        passwordValidater(logData.Password);
-    } else {
-      finalStatus =
-        nameValidater(logData.Name) &&
-        emailValidater(logData.Email) &&
-        phoneValidater(logData.Phone) &&
-        passwordValidater(logData.Password);
-    }
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++');
-    console.log(finalStatus);
-
-    if (finalStatus) {
-      logData.Password = await bcrypt.hash(logData.Password, 10);
-      await db
-        .get()
-        .collection(Data.COLLECTION_CLIENTS)
-        .insertOne(logData)
-        .then((data) => {
-          logStatus.status = true;
-          logStatus.Body = logData;
-        });
-    } else logStatus.status = false;
-    resolve(logStatus);
-  });
+  logStatus.status = true;
+  logData.Password = await bcrypt.hash(logData.Password, 10);
+  await db
+    .get()
+    .collection(Data.COLLECTION_CLIENTS)
+    .insertOne(logData)
+    .then((data) => {
+      logStatus.Body = logData;
+    });
+  console.log('VIDEO');
+  console.log(logStatus);
+  return logStatus;
 };
 
-function logEmailVlidate(Email) {
-  if (validator.isEmpty(Email, { ignore_whitespace: true })) {
-    logStatus.errMsg.email = 'Enter your email';
-    return false;
-  } else if (!validator.isEmail(Email)) {
-    logStatus.errMsg.email = 'Please correct your email format';
-    return false;
-  } else return true;
-}
+// exports.newLogin = (logData) => {
+//   return new Promise(async (resolve, reject) => {
+//     logStatus.status = false;
+//     if (await isEmailExist(logData.Email, logData.logType)) {
+//       logStatus.errMsg.email = 'This Email is alrady taken';
+//     } else {
+//       if (logData.logType === 'admin') {
+//         // const Administrator = getAdministrator();
+//         const Administrator = 'HashimZjH';
+//         // const passwordMatch = await bcrypt.compare(
+//         // logData.key,
+//         // Administrator.Password
+//         // );
+//         // bcrypt.compare(logData.key, Administrator.Password).then((result) => {
+//         // if (passwordMatch) {
+//         if (Administrator === logData.key) {
+//           logStatus.status = true;
+//           delete logData.key;
+//         } else logStatus.errMsg.pass = "The security key isn't correct";
+//         // });
+//         // } else
+//         //   logStatus.errMsg.pass =
+//         //     'Sorry admin registration not suport! try next time';
+//       } else {
+//         logStatus.status = true;
+//       }
+//     }
+//     if (logStatus.status) {
+//       console.log('++++++++++++++++++++++++++++++++');
+//       logData.Password = await bcrypt.hash(logData.Password, 10);
+//       await db
+//         .get()
+//         .collection(Data.COLLECTION_CLIENTS)
+//         .insertOne(logData)
+//         .then((data) => {
+//           logStatus.Body = logData;
+//         });
+//     }
+//     resolve(logStatus);
+//   });
+// };
 
-function logPassValidate(pass) {
-  if (validator.isEmpty(pass)) {
-    logStatus.errMsg.pass = 'Enter your password';
-    return false;
-  } else return true;
-}
 
+//TODO SIGNIN
 async function userFind(logData) {
   const user = await db
     .get()
-    .collection(Data.COLLECTION_USER)
+    .collection(Data.COLLECTION_CLIENTS)
     .findOne({ Email: logData.Email, logType: logData.logType });
-  if (user) return user;
-  else return false;
+  return user;
 }
 
-exports.Login = (logData) => {
-  return new Promise(async (resolve, reject) => {
-    if (
-      !(logEmailVlidate(logData.Email) && logPassValidate(logData.Password))
-    ) {
-      logStatus.status = false;
-    } else {
-      const user = userFind(logData);
-      if (user) {
-        if (PassCompare(logData.Password, user.Password)) {
-          logStatus.Body = user;
-          logStatus.status = true;
-        } else {
-          logStatus.errMsg.pass = "The password isn't macheing";
-          logStatus.status = false;
-        }
-      } else {
-        logStatus.status = false;
-        logStatus.errMsg.email = 'This user not found!';
-      }
+exports.Login = async function (logData) {
+  logStatus.status = false;
+  logStatus.errMsg = {
+    logPass: false,
+    logEmail: false,
+  };
+  const user = await userFind(logData);
+  if (user) {
+    const pasState = await bcrypt.compare(logData.Password, user.Password);
+    if (pasState) {
+      logStatus.status = true;
+      logStatus.Body = user;
+      return logStatus;
     }
-    resolve(logStatus);
-  });
+    logStatus.errMsg.logPass = "Your password isn't correct";
+    return logStatus;
+  }
+  logStatus.errMsg.logEmail = 'This user not found!';
+  return logStatus;
 };
 
-
+// WARN FFF ERROR BUG VIDEO

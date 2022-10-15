@@ -1,29 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const productContrller = require('./../controller/prodectController');
-const userContrller = require('./../controller/logsController');
+
 const user = {
   user: true,
-  style: 'styles',
+  style: 'style',
 };
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   productContrller.getAllProducts().then((prodects) => {
     if (req.session.logedIn) {
-      const datas = {
-        user: req.session.Body,
-        products: prodects,
-      }
-      res.render('users/index', { user, datas });
+      const userData = req.session.Body;
+      const products = prodects;
+      res.render('users/index', { user, userData, products });
     } else {
-      res.redirect('/signin');
+      res.redirect('/signIn');
     }
   });
-});
-
-router.get('/signout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/signin');
 });
 
 router.get('/myCarts', (req, res) => {
