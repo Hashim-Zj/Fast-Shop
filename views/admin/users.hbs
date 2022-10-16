@@ -1,10 +1,11 @@
 <section>
   <div class="container-fluid">
     <div class="d-flex">
-      <a href="/admin/add-products" class="btn btn-primary mx-auto">Add</a>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <form action="/admin/findUser" class="d-flex w-25 ms-auto" role="search">
+        <input class="form-control me-2" 
+        type="search" placeholder="Search" 
+        aria-label="Search" name="search" value="">
+        <button class="btn btn-outline-primary" type="submit">search</button>
       </form>
     </div>
 
@@ -41,63 +42,5 @@
     </table>
   </div>
 
-  <div class="modal fade modal-dialog modal-dialog-centered" id="staticBackdrop" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          {{!-- FFF form user edit --}}
-          <form action='/signUp' method='post' class=''>
-            <div class='form-group'>
-              <label class='form-label' for=''>Full Name</label>
-              <input type='text' name='Name' class='form-control forminput' value='{{clients.Phone}}'
-                placeholder='Name' />
-
-              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
-                requiered</span>
-            </div>
-
-            <div class='form-group'>
-              <label class='form-label' for='Email'>Email address</label>
-              <input type='text' name='Email' class='form-control forminput' value='{{clients.Email}}'
-                placeholder='Email' />
-              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
-                requiered</span>
-              {{#if statusData.errMsg.email}}
-                <span class='text-danger'><i class='fa-regular fa-circle-exclamation'>
-                  </i>{{statusData.errMsg.email}}</span>
-              {{/if}}
-            </div>
-
-            <div class='form-group'>
-              <label class='form-label'>PhoneNo</label>
-              <input type='text' name='Phone' class='form-control forminput' value='{{clients.Phone}}'
-                placeholder='PhoneNo' />
-
-              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
-                requiered</span>
-            </div>
-            <div class="form-group">
-              <label for="exampleDataList" class="form-label">Type</label>
-              <input class="form-control" list="datalistOptions" name="logType" id="exampleDataList"
-                placeholder="Type to search...">
-              <datalist id="datalistOptions">
-                <option value="user">
-                <option value="admin">
-              </datalist>
-            </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </section>

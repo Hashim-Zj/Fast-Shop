@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const adminControlles = require('./../controller/adminControlles');
+const clientsControlles = require('./../controller/clientsControlles');
 const admin = {
   admin: true,
   style: 'style',
@@ -10,33 +11,64 @@ const admin = {
 router.get('/', async (req, res, next) => {
   if (req.session.logedIn) {
     admin.user = req.session.Body;
-    const clients = await adminControlles.getAllClients('user')
+    const clients = await clientsControlles.getAllClients('user')
     res.render('admin/users', { admin, clients });
   } else {
     res.redirect('/adminSignIn');
   }
 });
 
-router.get('/users', async (req, res, next) => {
-  if (req.session.logedIn) {
-    admin.user = req.session.Body;
-    const clients = await adminControlles.getAllClients('user')
-    res.render('admin/users', { admin, clients });
-  } else {
-    res.redirect('/adminSignIn');
-  }
-});
-
+// router.get('/users', async (req, res, next) => {
+//   if (req.session.logedIn) {
+//     admin.user = req.session.Body;
+//     const clients = await clientsControlles.getAllClients('user')
+//     res.render('admin/users', { admin, clients });
+//   } else {
+//     res.redirect('/adminSignIn');
+//   }
+// });
 
 router.get('/admins', async (req, res) => {
   if (req.session.logedIn) {
-    const clients = await adminControlles.getAllClients('admin')
+    const clients = await clientsControlles.getAllClients('admin')
     res.render('admin/admins', { admin, clients });
   } else {
     res.redirect('/adminSignIn');
   }
 });
 
+router.get('/editUser/:id', async (req, res) => {
+  if (req.session.logedIn) {
+    const userId = req.params.id;
+    const user = await clientsControlles.getOneUser({ _id: objectId(userId), logType: 'user' });
+
+    res.render('admin/editUser', { admin, user });
+  } else {
+    res.redirect('/adminSignIn');
+  }
+});
+
+// WARN POST
+router.post('/editUser/:id', async (req, res) => {
+  const userId = req.params.id;
+  await clientsControlles.editOneUser(userId, req.body);
+  res.redirect('/users');
+})
+
+router.post('/deleatUser/:id', async (req, res) => {
+  const userId = req.params.id;
+  await clientsControlles.deleteOneUser(userId);
+  res.redirect('/users');
+})
+
+router.post('/findUser', async (req, res) => {
+  const userId = req.params.id;
+  await clientsControlles.editOneUser(userId, req.body);
+  res.redirect('/users');
+})
+
+
+  // / admin /
 router.get('/All', async (req, res) => {
   if (req.session.logedIn) {
     const prodects = await adminControlles.getAllProducts()
@@ -89,14 +121,6 @@ router.get('/Movies', async (req, res) => {
   if (req.session.logedIn) {
     const prodects = await adminControlles.getOneCatogary('Elactronics')
     admin.prodects = prodects;
-  } else {
-    res.redirect('/adminSignIn');
-  }
-});
-
-router.get('/edit-users', async (req, res) => {
-  if (req.session.logedIn) {
-
   } else {
     res.redirect('/adminSignIn');
   }

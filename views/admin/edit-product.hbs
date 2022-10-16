@@ -6,37 +6,37 @@
     </div>
     <div class="panel-body">
 
-      <form action="/admin/editProduct/{{itom._id}}" method="post" enctype="multipart/form-data"
+      <form action="/admin/editProduct/{{product._id}}" method="post" enctype="multipart/form-data"
         class="form-horizontal mt-5" role="form">
         <!-- form-group // -->
         <div class="form-group">
           <label for="name" class="col-sm-3 control-label">Title</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="title" id="title" value="{{itom.title}}"
+            <input type="text" class="form-control" name="title" id="title" value="{{product.Title}}"
               placeholder="Enter Product Title">
           </div>
         </div> <!-- form-group // -->
         <div class="form-group">
           <label for="name" class="col-sm-3 control-label">Catogary</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="catogary" id="catogary" value="{{itom.catogary}}"
+            <input type="text" class="form-control" name="catogary" id="catogary" value="{{product.catogary}}"
               placeholder="Catogary">
           </div>
         </div> <!-- form-group // -->
         <div class="form-group">
           <label for="about" class="col-sm-3 control-label">Discription</label>
           <div class="col-sm-9">
-            <textarea class="form-control" name="discription" id="discription">{{itom.discription}}</textarea>
+            <textarea class="form-control" name="discription" id="discription">{{product.discription}}</textarea>
           </div>
         </div>
         <!-- form-group // -->
         <div class="form-group">
           <label class="col-sm-3 control-label">Price</label>
           <div class="col-sm-3">
-            <input type="text" class="form-control" name="price" id="price" value="{{itom.price}}" placeholder="price">
+            <input type="text" class="form-control" name="price" id="price" value="{{product.price}}" placeholder="price">
           </div>
         </div>
-        <img src="/images/products/{{itom._id}}.jpeg" style="width: 60px;height: 100px;" alt="" id="imagview">
+        <img src="/images/products/{{product._id}}.jpeg" style="width: 60px;height: 100px;" alt="" id="imagview">
 
         <div class="form-group">
           <!-- form-group // -->

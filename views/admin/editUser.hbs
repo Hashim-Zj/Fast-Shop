@@ -1,0 +1,42 @@
+<section>
+  <div class="w-lg-50">
+    {{!-- FFF form user edit --}}
+    <form action='/admin/editUser/{{user._id}}' method='post' class=''>
+      <div class='form-group'>
+        <label class='form-label' for=''>Full Name</label>
+        <input type='text' name='Name' class='form-control forminput' value='{{user.Name}}' placeholder='Name' />
+        {{!-- 
+              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
+                requiered</span> --}}
+      </div>
+
+      <div class='form-group'>
+        <label class='form-label' for='Email'>Email address</label>
+        <input type='text' name='Email' class='form-control forminput' value='{{user.Email}}' placeholder='Email' />
+        {{!-- <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
+                requiered</span> --}}
+        {{!-- {{#if statusData.errMsg.email}}
+                <span class='text-danger'><i class='fa-regular fa-circle-exclamation'>
+                  </i>{{statusData.errMsg.email}}</span>
+              {{/if}} --}}
+      </div>
+
+      <div class='form-group'>
+        <label class='form-label'>PhoneNo</label>
+        <input type='text' name='Phone' class='form-control forminput' value='{{user.Phone}}' placeholder='PhoneNo' />
+        {{!-- 
+              <span hidden class='text-danger'><i class='fa-regular fa-circle-exclamation'></i>this field is
+                requiered</span> --}}
+      </div>
+      <div class="form-group">
+        <label for="exampleDataList" class="form-label">Type</label>
+        <input class="form-control" list="datalistOptions" name="logType" id="exampleDataList"
+          placeholder="Type to search...">
+        <datalist id="datalistOptions">
+          <option value="user">
+          <option value="admin">
+        </datalist>
+      </div>
+    </form>
+  </div>
+</section>

@@ -3,45 +3,10 @@ const collections = require('./../config/cnstans');
 const objectId = require('mongodb').ObjectID;
 const fs = require('fs');
 
-exports.getAllClients = async function (type) {
-  const users = await db
-    .get()
-    .collection(collections.COLLECTION_CLIENTS)
-    .find({ logType: type })
-    .toArray();
-  return users;
-};
 
 
-exports.getOneUsers = async function (userId) {
-  const user = await db
-    .get()
-    .collection(collections.COLLECTION_CLIENTS)
-    .find({ _id: userId, logType: 'user' })
-    .toArray();
-  return user;
-};
 
-exports.editOneUser = async function (userId, Data) {
-  db.get()
-    .collection(collections.COLLECTION_CLIENTS)
-    .updateOne(
-      { _id: objectId(userId) },
-      {
-        $set: {
-          Name: DAta.Name,
-          Email: DAta.Email,
-          Phone: DAta.Phone,
-          logType: DAta.logType,
-        },
-      });
-};
 
-exports.deleteOneUser = function (userId) {
-  db.get()
-    .collection(collections.COLLECTION_CLIENTS)
-    .deleteOne({ _id: objectId(userId) });
-};
 
 
 
