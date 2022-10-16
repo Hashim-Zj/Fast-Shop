@@ -2,9 +2,8 @@ const db = require('./../config/connection');
 const Data = require('./../config/cnstans');
 const bcrypt = require('bcrypt');
 
-const logStatus = { errMsg: {} };
+let logStatus = { errMsg: {} };
 
-//TODO SIGNUP
 async function isEmailExist(email, type) {
   const sudoEmail = await db
     .get()
@@ -43,8 +42,8 @@ async function sudoCmp(Password) {
   return false;
 }
 
+// EDIT SIGNUP
 exports.newLogin = async function (logData) {
-  // logStatus =null;
   logStatus.status = false;
   logStatus.errMsg = {
     pass: false,
@@ -52,14 +51,10 @@ exports.newLogin = async function (logData) {
   };
   if (await isEmailExist(logData.Email, logData.logType)) {
     logStatus.errMsg.email = 'This Email is alrady taken';
-    console.log('ERROR WMAIL');
-    console.log(logStatus);
     return logStatus;
   }
   if (logData.logType === 'admin') {
     if (!(await sudoCmp(logData.key))) {
-      console.log('WARN security');
-      console.log(logStatus);
       return logStatus;
     }
     delete logData.key;
@@ -73,55 +68,9 @@ exports.newLogin = async function (logData) {
     .then((data) => {
       logStatus.Body = logData;
     });
-  console.log('VIDEO');
-  console.log(logStatus);
   return logStatus;
 };
 
-// exports.newLogin = (logData) => {
-//   return new Promise(async (resolve, reject) => {
-//     logStatus.status = false;
-//     if (await isEmailExist(logData.Email, logData.logType)) {
-//       logStatus.errMsg.email = 'This Email is alrady taken';
-//     } else {
-//       if (logData.logType === 'admin') {
-//         // const Administrator = getAdministrator();
-//         const Administrator = 'HashimZjH';
-//         // const passwordMatch = await bcrypt.compare(
-//         // logData.key,
-//         // Administrator.Password
-//         // );
-//         // bcrypt.compare(logData.key, Administrator.Password).then((result) => {
-//         // if (passwordMatch) {
-//         if (Administrator === logData.key) {
-//           logStatus.status = true;
-//           delete logData.key;
-//         } else logStatus.errMsg.pass = "The security key isn't correct";
-//         // });
-//         // } else
-//         //   logStatus.errMsg.pass =
-//         //     'Sorry admin registration not suport! try next time';
-//       } else {
-//         logStatus.status = true;
-//       }
-//     }
-//     if (logStatus.status) {
-//       console.log('++++++++++++++++++++++++++++++++');
-//       logData.Password = await bcrypt.hash(logData.Password, 10);
-//       await db
-//         .get()
-//         .collection(Data.COLLECTION_CLIENTS)
-//         .insertOne(logData)
-//         .then((data) => {
-//           logStatus.Body = logData;
-//         });
-//     }
-//     resolve(logStatus);
-//   });
-// };
-
-
-//TODO SIGNIN
 async function userFind(logData) {
   const user = await db
     .get()
@@ -130,6 +79,7 @@ async function userFind(logData) {
   return user;
 }
 
+// EDIT SIGNIN
 exports.Login = async function (logData) {
   logStatus.status = false;
   logStatus.errMsg = {
@@ -150,5 +100,3 @@ exports.Login = async function (logData) {
   logStatus.errMsg.logEmail = 'This user not found!';
   return logStatus;
 };
-
-// WARN FFF ERROR BUG VIDEO

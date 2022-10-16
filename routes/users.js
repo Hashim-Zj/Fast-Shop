@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const productContrller = require('./../controller/prodectController');
+const adminControlles = require('./../controller/adminControlles');
 
 const user = {
   user: true,
@@ -9,7 +9,7 @@ const user = {
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  productContrller.getAllProducts().then((prodects) => {
+  adminControlles.getAllProducts().then((prodects) => {
     if (req.session.logedIn) {
       const userData = req.session.Body;
       const products = prodects;
@@ -18,10 +18,6 @@ router.get('/', (req, res, next) => {
       res.redirect('/signIn');
     }
   });
-});
-
-router.get('/myCarts', (req, res) => {
-  res.render('users/carts');
 });
 
 module.exports = router;

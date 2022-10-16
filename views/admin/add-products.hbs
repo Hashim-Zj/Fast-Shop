@@ -12,26 +12,38 @@
         <div class="form-group">
           <label for="name" class="col-sm-3 control-label">Title</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="title" id="title" placeholder="Enter Product Title">
+            <input type="text" class="form-control" name="Title" id="title" placeholder="Enter Product Title">
           </div>
         </div> <!-- form-group // -->
         <div class="form-group">
+          <label for="exampleDataList" class="form-label">Item Division</label>
+          <input class="form-control" list="datalistOptions" name="ieomDiv" id="exampleDataList" placeholder="Type to search...">
+          <datalist id="datalistOptions">
+            <option value="Electronics">
+            <option value="vegetables">
+            <option value="Grocery">
+            <option value="Books">
+            <option value="Movies & TV Shows">
+          </datalist>
+          </div>
+          
+          <div class="form-group">
           <label for="name" class="col-sm-3 control-label">Catogary</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="catogary" id="catogary" placeholder="Catogary">
+            <input type="text" class="form-control" name="Catogary" id="catogary" placeholder="Catogary">
           </div>
-        </div> <!-- form-group // -->
+        </div><!-- form-group // -->
         <div class="form-group">
           <label for="about" class="col-sm-3 control-label">Discription</label>
           <div class="col-sm-9">
-            <textarea class="form-control" name="discription" id="discription"></textarea>
+            <textarea class="form-control" name="Discription" id="discription"></textarea>
           </div>
         </div>
         <!-- form-group // -->
         <div class="form-group">
           <label class="col-sm-3 control-label">Price</label>
           <div class="col-sm-3">
-            <input type="text" class="form-control" name="price" id="price" placeholder="price">
+            <input type="text" class="form-control" name="Price" id="price" placeholder="price">
           </div>
         </div> <!-- form-group // -->
         <div class="form-group">
@@ -39,15 +51,11 @@
             <label class="control-label small" for="file_img">Image (jpg/png):</label>
             <input type="file" name="file_img">
           </div>
-          <div class="col-sm-3">
-            <label class="control-label small" for="file_img">Thumbnail Image:</label> 
-            <input type="file" name="file_Thumb">
-          </div>
         </div> <!-- form-group // -->
         <hr>
         <div class="form-group">
           <div class="col-sm-offset-3 col-sm-9">
-            <button type="submit" class="btn btn-primary">ADD</button>
+            <button type="submit" class="btn btn-primary">ADD ITEM</button>
           </div>
         </div>
       </form>

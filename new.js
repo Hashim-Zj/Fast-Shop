@@ -1,13 +1,13 @@
-function is() {
-  num=null;
- if(num)
-    return true;
-  else return false;
-}
+// function is() {
+//   num=null;
+//  if(num)
+//     return true;
+//   else return false;
+// }
 
-if(is()){
-  console.log('is null');
-}else console.log('is not mulll');
+// if(is()){
+//   console.log('is null');
+// }else console.log('is not mulll');
 
 
 // let animals = {
@@ -20,3 +20,12 @@ if(is()){
 // // delete animals['Dog'];
 
 // console.log(animals);
+
+let a;
+console.log(a);
+
+if(a){
+  console.log('+++++++++++++++++++++');
+}else{
+  console.log('___________________');
+}

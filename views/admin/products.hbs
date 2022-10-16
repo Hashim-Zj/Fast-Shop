@@ -1,13 +1,19 @@
 <section>
   <div class="container-fluid">
-    <div class="row">
-      <a href="/admin/add-products" class="btn btn-primary my-auto">Add</a>
+    <div class="d-flex">
+      <a href="/admin/add-products" class="btn btn-primary mx-auto">Add</a>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
+    
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">Isi No:</th>
           <th scope="col">Title</th>
+          <th scope="col">Division</th>
           <th scope="col">Catogary</th>
           <th scope="col">Price</th>
           <th scope="col">Image</th>
@@ -16,7 +22,7 @@
       <tbody>
         {{#each admin.prodects}}
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{@index}}</th>
             <td>{{this.title}}</td>
             <td>{{this.catogary}}</td>
             <td>{{this.price}}</td>
