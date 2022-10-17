@@ -1,7 +1,10 @@
 <section>
   <div class="container-fluid">
     <div class="d-flex">
-      <form action="/admin/findUser" class="d-flex w-25 ms-auto" role="search">
+      {{#if sercherr}}
+      <h1 class="text-danger">Sory... user Not found.</h1>
+      {{/if}}
+      <form action="/admin/findUser" method="post" class="d-flex w-25 ms-auto" role="search">
         <input class="form-control me-2" 
         type="search" placeholder="Search" 
         aria-label="Search" name="search" value="">
@@ -27,8 +30,7 @@
             <td>{{this.Email}}</td>
             <td>{{this.Phone}}</td>
             <td>
-              <a href="/admin/editUser/{{this._id}}" class="mx-3" data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop">
+              <a href="/admin/editUser/{{this._id}}" class="mx-3">
                 <span class="material-icons-outlined fs-2 text-primary">drive_file_rename_outline</span>
               </a>
               <a href="/admin/deleatUser/{{this._id}}"

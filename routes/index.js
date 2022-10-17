@@ -24,9 +24,7 @@ router.get('/signIn', (req, res) => {
     message: '',
   };
   const logdIn = req.session.logedIn;
-  console.log('logedin___________' + logdIn);
-  if (logdIn) {
-    console.log('logedin++++++++++++++++++++' + logdIn);
+  if (req.session.logedIn) {
     res.redirect('/users/');
   } else {
     const statusData = {
@@ -47,9 +45,7 @@ router.get('/adminSignIn', (req, res) => {
     message: 'As Administrator',
   };
   const logdIn = req.session.logedIn;
-  console.log('logedin___________' + logdIn);
   if (logdIn) {
-    console.log('logedin++++++++++++++++++++' + logdIn);
     res.redirect('/admin/');
   } else {
     const statusData = {
@@ -83,12 +79,10 @@ router.post('/signin', async (req, res) => {
 router.get('/signUp', (req, res) => {
   indexData.style = 'register';
   const logdIn = req.session.logedIn;
-  console.log('logedin___________' + logdIn);
   if (logdIn) {
-    console.log('logedin++++++++++++++++++++' + logdIn);
     (req.body.logType === 'user')
       ? res.redirect('/users/')
-      : res.redirect('/adminSignIn');
+      : res.redirect('/admin/');
   } else {
     const statusData = {
       errMsg: req.session.errMsg,

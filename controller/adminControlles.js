@@ -5,11 +5,6 @@ const fs = require('fs');
 
 
 
-
-
-
-
-
 exports.addProduct = (product, image, next) => {
   console.log(product);
   db.get()
@@ -34,16 +29,16 @@ exports.getAllProducts = async function () {
   return prodects;
 };
 
-exports.getOneCatogary = async function (ieomDiv) {
+exports.getOneCatogary = async function (projection) {
   const prodects = await db
     .get()
     .collection(collections.COLLECTION_PRODUCT)
-    .find({ ieomDiv: ieomDiv })
+    .find(projection)
     .toArray();
   return prodects;
 };
 
-exports.getOneItem = async function (itemId) {
+exports.getOneProduct = async function (itemId) {
   const item = await db
     .get()
     .collection(collections.COLLECTION_PRODUCT)
@@ -51,7 +46,7 @@ exports.getOneItem = async function (itemId) {
   return item;
 };
 
-exports.updateItem = async function (itemId, DAta) {
+exports.updateProduct = async function (itemId, DAta) {
   db.get()
     .collection(collections.COLLECTION_PRODUCT)
     .updateOne(
@@ -64,22 +59,21 @@ exports.updateItem = async function (itemId, DAta) {
           Discription: DAta.Discription,
           Price: DAta.Price,
         },
-      }
-    );
+      });
+      return true;
 };
 
-exports.deleteMovie = (itemId) => {
-  return new Promise((resolve, reject) => {
+exports.deleteProduct =async function (itemId) {
     db.get()
       .collection(collections.COLLECTION_PRODUCT)
       .deleteOne({ _id: objectId(itemId) })
       .then(async () => {
         fs.rm(
-          `${__dirname}/public/images/products/` + itemId + '.jpeg',
+          `${__dirname}/./../public/images/products/${itemId }.jpeg`,
           (err, done) => {
-            resolve(err);
+            return(err);
           }
         );
       });
-  });
+  return true;
 };

@@ -2,13 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       {{#each products}}
-        <div class="card" style="width: 18rem;">
-          <img src="/images/products/{{this._id}}.jpeg" class="card-img-top" alt="">
+        <div class="card col" style="width: 18rem; height: fit-content;">
+          <img src="/images/products/{{this._id}}.jpeg" style="width: 16rem; height:25rem;" class="card-img-top" alt="">
           <div class="card-body">
-            <h5 class="card-title">{{this.title}}</h5>
-            <p class="card-text">{{this.catogery}}</p>
-            <p class="card-text">{{this.discription}}
-              <p class="card-text">{{this.price}}</p>
+            <h5 class="card-title">{{this.Title}}</h5>
+            <p class="card-text">{{this.Catogary}}</p>
+            <p class="card-text">{{this.Discription}}
+              <p class="card-text">{{this.Price}}</p>
             </p>
             <a href="/users/myCart" class="btn btn-primary">Buy or Rent</a>
           </div>

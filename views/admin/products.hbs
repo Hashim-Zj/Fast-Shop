@@ -20,12 +20,13 @@
         </tr>
       </thead>
       <tbody>
-        {{#each admin.prodects}}
+        {{#each prodects}}
           <tr>
             <th scope="row">{{@index}}</th>
-            <td>{{this.title}}</td>
-            <td>{{this.catogary}}</td>
-            <td>{{this.price}}</td>
+            <td>{{this.Title}}</td>
+            <td>{{this.ieomDiv}}</td>
+            <td>{{this.Catogary}}</td>
+            <td>{{this.Price}}</td>
             <td><img src="/images/products/{{this._id}}.jpeg" style="width: 60px;height: 100px;" alt=""></td>
             <td>
               <a href="/admin/editProduct/{{this._id}}"><span

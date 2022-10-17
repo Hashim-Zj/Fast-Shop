@@ -2,7 +2,6 @@ const db = require('./../config/connection');
 const collections = require('./../config/cnstans');
 const objectId = require('mongodb').ObjectID;
 
-
 exports.getAllClients = async function (type) {
   const users = await db
     .get()
@@ -12,20 +11,19 @@ exports.getAllClients = async function (type) {
   return users;
 };
 
-
 exports.getOneUser = async function (projection) {
   const user = await db
     .get()
     .collection(collections.COLLECTION_CLIENTS)
-    .findOne(projection)
-    .toArray();
-    console.log('this id user');
-    console.log(user);
+    .findOne(projection);
+  console.log('this id user');
+  console.log(user);
   return user;
 };
 
 exports.editOneUser = async function (userId, Data) {
-  await db.get()
+  await db
+    .get()
     .collection(collections.COLLECTION_CLIENTS)
     .updateOne(
       { _id: objectId(userId) },
@@ -36,12 +34,15 @@ exports.editOneUser = async function (userId, Data) {
           Phone: Data.Phone,
           logType: Data.logType,
         },
-      });
+      }
+    );
+  return true;
 };
 
-exports.deleteOneUser =async function (userId) {
- await db.get()
+exports.deleteOneUser = async function (userId) {
+  await db
+    .get()
     .collection(collections.COLLECTION_CLIENTS)
     .deleteOne({ _id: objectId(userId) });
+  return true;
 };
-

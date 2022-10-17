@@ -18,25 +18,25 @@
     </head>
     <body>
     {{{body}}}
-    <script src="javascripts/index/{{indexData.js}}.js"></script>
+    <script src="/javascripts/index/{{indexData.js}}.js"></script>
     {{/if}}
 
-    {{#if admin}}
+    {{#if admin.admin}}
       <link rel='stylesheet' href='/stylesheets/admin/style.css' />
       </head>
       <body>
         {{>admin-header}}
         {{{body}}}
-        <script src="javascripts/admin/script.js"></script>
+        <script src="/javascripts/admin/script.js"></script>
     {{/if}}
     
-    {{#if user}}
+    {{#if user.user}}
       <link rel='stylesheet' href='/stylesheets/users/style.css' />
         </head>
         <body>
     {{>user-header}}
     {{{body}}}
-      <script src="javascripts/users/script.js"></script>
+      <script src="/javascripts/users/script.js"></script>
     {{/if}}
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
